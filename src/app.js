@@ -5,16 +5,20 @@ import helmet from 'helmet'
 
 import pkg from '../package.json'
 
+import products from '../src/routes/products.routes'
+
 const app = express()
 
 
 //Middelwares
-app.use(express.json())
 app.use(cors())
 app.use(morgan('dev'))
+app.use(express.json())//Ver los datos en consola como JSON
 app.use(helmet())
 
 app.set('pkg', pkg)
+
+//Rutas y endpoints
 
 app.get('/', (req, res) => {
     res.json({
@@ -25,5 +29,6 @@ app.get('/', (req, res) => {
     })
 })
 
+app.use('/products',products)
 
 export default app
