@@ -12,8 +12,8 @@ const app = express()
 
 //Middelwares
 app.use(cors())
-app.use(morgan('dev'))
 app.use(express.json())//Ver los datos en consola como JSON
+app.use(morgan('dev'))
 app.use(helmet())
 
 app.set('pkg', pkg)
