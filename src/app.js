@@ -5,7 +5,8 @@ import helmet from 'helmet'
 
 import pkg from '../package.json'
 
-import products from '../src/routes/products.routes'
+import products from './routes/products.routes'
+import authRoutes from './routes/auth.routes'
 
 const app = express()
 
@@ -13,13 +14,13 @@ const app = express()
 //Middelwares
 app.use(cors())
 app.use(express.json())//Ver los datos en consola como JSON
-app.use(morgan('dev'))
+app.use(morgan('dev'))//Ver las peticiones en consola
 app.use(helmet())
 
 app.set('pkg', pkg)
 
-//Rutas y endpoints
 
+//Rutas y endpoints
 app.get('/', (req, res) => {
     res.json({
         author: app.get('pkg').author,
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
     })
 })
 
-app.use('/products',products)
+app.use('/api/products',products)
+app.use('/api/auth',authRoutes)
 
 export default app
