@@ -5,10 +5,13 @@ import helmet from 'helmet'
 
 import pkg from '../package.json'
 
+import { createRoles } from './libs/initialSetup'
+
 import products from './routes/products.routes'
 import authRoutes from './routes/auth.routes'
 
 const app = express()
+createRoles()
 
 
 //Middelwares
