@@ -8,7 +8,7 @@ export const createRoles = async () => {
         let values = await Promise.all([
             new Role({ name: 'user' }).save(),
             new Role({ name: 'moderador' }).save(),
-            new Role({ name: 'save' }).save()
+            new Role({ name: 'admin' }).save()
         ])
         console.log(values)
     } catch (error) {
