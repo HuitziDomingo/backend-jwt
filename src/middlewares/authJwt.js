@@ -2,6 +2,7 @@
 import jwt from 'jsonwebtoken'
 import config from '../config'
 import User from '../models/User'
+import Role from '../models/Role'
 
 export const verifyToken = async (req, res, next) => {
     try {
@@ -22,9 +23,31 @@ export const verifyToken = async (req, res, next) => {
 }
 
 export const isModerator = async (req, res, next) => {
+    let user = await User.findById(req.userId)//Obtenemos el usuario que ya esta verificado
+    let roles = await Role.find({ _id: { $in: user.roles } })
+    console.log(roles)
 
+    for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === "moderator") {
+            next()
+            return;
+        }
+    }
+
+    return res.status(403).json({ message: "Requiere moderador role" })
 }
 
-export const isAdmin = (req, res, next) => {
+export const isAdmin = async (req, res, next) => {
+    let user = await User.findById(req.userId)//Obtenemos el usuario que ya esta verificado
+    let roles = await Role.find({ _id: { $in: user.roles } })
+    console.log(roles)
 
+    for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === "admin") {
+            next()
+            return;
+        }
+    }
+
+    return res.status(403).json({ message: "Requiere admin role" })
 }

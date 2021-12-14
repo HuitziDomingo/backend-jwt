@@ -2,19 +2,19 @@ import { Router } from "express"
 
 import * as productController from '../controllers/ProductsController'
 
-import { verifyToken } from '../middlewares'
+import { authJwt } from '../middlewares'
 
 const router = Router()
 
 router.get('/', productController.getProducts)
 
-router.post('/', verifyToken, productController.createProducts)
+router.post('/', [authJwt.verifyToken, authJwt.isModerator], productController.createProducts)
 
 router.get('/:productId', productController.getProductsById)
 
-router.put('/:productId', verifyToken, productController.updateProductsById)
+router.put('/:productId', [authJwt.verifyToken, authJwt.isAdmin], productController.updateProductsById)
 
-router.delete('/:productId', verifyToken, productController.deleteProductsById)
+router.delete('/:productId', [authJwt.verifyToken, authJwt.isAdmin], productController.deleteProductsById)
 
 
 export default router
